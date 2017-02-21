@@ -37,11 +37,18 @@ namespace Universidad.Controllers
 
             var Estudiante = from s in db.Estudiante select s;
 
-            if (!String.IsNullOrEmpty(searchString))
+            int matricula;
+            if(Int32.TryParse(searchString, out matricula))
             {
-                Estudiante = Estudiante.Where(s => s.Nombre.Contains(searchString) || s.Apellido.Contains(searchString));
+                Estudiante = Estudiante.Where(s => s.Matricula == matricula);
             }
-
+            else
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    Estudiante = Estudiante.Where(s => s.Nombre.Contains(searchString) || s.Apellido.Contains(searchString));
+                }
+            }
             switch (sortOrder)
             {
                 case "name_desc":

@@ -28,12 +28,15 @@
             Apellido
         </th>
         <th>
+            Matr&iacute;cula
+        </th>
+        <th>
             Correo
         </th>
         <th>
             @Html.ActionLink("Fecha Inscripción", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
-        <th></th>
+        <th>Opciones.</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -43,6 +46,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Apellido)
+        </td>
+        <td>
+            @Html.DisplayFor(Model => item.Matricula)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Correo)

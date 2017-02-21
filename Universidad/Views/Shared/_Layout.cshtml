@@ -1,13 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Proyecto de Universidad</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    
 </head>
-<body>
+<body style="background: #6190E8; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #6190E8 , #A7BFE8); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #6190E8 , #A7BFE8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -26,6 +30,7 @@
                     <li>@Html.ActionLink("Estudiantes", "Index", "Estudiante")</li>
                     <li>@Html.ActionLink("Cursos", "Index", "Curso")</li>
                     <li>@Html.ActionLink("Inscripción", "Index", "Inscripcion")</li>
+                    <li>@Html.ActionLink("Profesores", "Index", "Profesor")</li>
                 </ul>
             </div>
         </div>

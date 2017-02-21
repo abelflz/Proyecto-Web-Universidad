@@ -10,12 +10,13 @@ namespace Universidad.DAL
 {
     public class UniversityContext : DbContext
     {
-        public UniversityContext() : base("name=CS")
+        public UniversityContext() : base("base=CS")
         {
 
         }
         public DbSet<Estudiante> Estudiante { get; set; }
         public DbSet<Inscripcion> Inscripcion { get; set; }
         public DbSet<Curso> Curso { get; set; }
+        public DbSet<Profesor> Profesor { get; set; }
     }
 }

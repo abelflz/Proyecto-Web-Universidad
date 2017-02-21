@@ -16,6 +16,9 @@ namespace Universidad.Models
         [Key]
         public int ID { get; set; }
 
+        [Required]
+        [Display(Name = "Profesor")]
+        public string profesor { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [Display(Name = "Curso", Description = "Curso")]
@@ -33,5 +36,8 @@ namespace Universidad.Models
 
         [ForeignKey("Matricula")]
         public virtual Estudiante Estudiante { get; set; }
+
+        [ForeignKey("Profesor")]
+        public virtual Profesor Profesor { get; set; }
     }
 }
