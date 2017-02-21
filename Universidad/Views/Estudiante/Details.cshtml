@@ -60,11 +60,11 @@
                         @Html.Label("Cantidad de créditos")
                     </th>
                 </tr>
-                @foreach(var item in Model.Inscripcion)
+                @foreach (var item in Model.Inscripcion)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(model=> item.Curso.Nombre)
+                            @Html.DisplayFor(model => item.Curso.Nombre)
                         </td>
                         <td>
                             @Html.DisplayFor(model => item.CodigoCurso)

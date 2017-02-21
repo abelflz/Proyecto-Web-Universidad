@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Universidad.DAL;
 using Universidad.Models;
 using System.Data.SqlClient;
+using PagedList;
 
 namespace Universidad.Controllers
 {
@@ -17,9 +18,48 @@ namespace Universidad.Controllers
         private UniversityContext db = new UniversityContext();
 
         // GET: Estudiante
-        public ActionResult Index()
-        {          
-            return View(db.Estudiante.ToList());
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if(searchString!= null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var Estudiante = from s in db.Estudiante select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Estudiante = Estudiante.Where(s => s.Nombre.Contains(searchString) || s.Apellido.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    Estudiante = Estudiante.OrderByDescending(s => s.Nombre);
+                    break;
+                case "Date":
+                    Estudiante = Estudiante.OrderBy(s => s.Fecha_Inscripccion);
+                    break;
+                case "date_desc":
+                    Estudiante = Estudiante.OrderByDescending(s => s.Fecha_Inscripccion);
+                    break;
+                default:
+                    Estudiante = Estudiante.OrderBy(s => s.Nombre);
+                    break;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);        
+            return View(Estudiante.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Estudiante/Details/5
@@ -66,13 +106,19 @@ namespace Universidad.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Matricula,Nombre,Apellido,Correo,Fecha_Inscripccion")] Estudiante estudiante)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Estudiante.Add(estudiante);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Estudiante.Add(estudiante);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }catch(DataException /* dex */)
+            {
+                //Log error(Uncomment dex to add a log)
+                ModelState.AddModelError("", "No se pudo guardar. Intenta de nuevo, si el problema persiste comuníquese con el administrador del sistema");
             }
-
             return View(estudiante);
         }
 
@@ -94,25 +140,41 @@ namespace Universidad.Controllers
         // POST: Estudiante/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Matricula,Nombre,Apellido,Correo,Fecha_Inscripccion")] Estudiante estudiante)
+        public ActionResult EditPost(int? id)
         {
-            if (ModelState.IsValid)
+            if(id == null)
             {
-                db.Entry(estudiante).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View(estudiante);
+            var EstudianteEditar = db.Estudiante.Find(id);
+
+            if (TryUpdateModel(EstudianteEditar, "", new string[] { "Matricula", "Nombre", "Apellido", "Correo", "Fecha_Inscripccion" }))
+            {
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DataException)
+                {
+                    ModelState.AddModelError("", "No se pudo guardar. Intenta de nuevo, si el problema persiste comuníquese con el administrador del sistema");
+                }
+            }
+            return View(EstudianteEditar);
         }
 
         // GET: Estudiante/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? guardarError=false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (guardarError.GetValueOrDefault())
+            {
+                ViewBag.Error = "No se pudo guardar. Intenta de nuevo, si el problema persiste comuníquese con el administrador del sistema";
             }
             Estudiante estudiante = db.Estudiante.Find(id);
             if (estudiante == null)
@@ -123,13 +185,20 @@ namespace Universidad.Controllers
         }
 
         // POST: Estudiante/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
-            Estudiante estudiante = db.Estudiante.Find(id);
-            db.Estudiante.Remove(estudiante);
-            db.SaveChanges();
+            try
+            {
+                Estudiante estudiante = db.Estudiante.Find(id);
+                db.Estudiante.Remove(estudiante);
+                db.SaveChanges();
+            }
+            catch (DataException)
+            {
+                return RedirectToAction("Delete", new { id = id, guardarError = true });
+            }
             return RedirectToAction("Index");
         }
 
