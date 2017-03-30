@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Selección Tanda";
+}
+
+<form method="post" action="@Url.Action("Index", "Tanda", null)">
+    <input type="radio"  name="Tanda" value="Matutino" class="checkbox checkbox-inline"/>Matutino<br />
+    <input type="radio"  name="Tanda" value="Mixto"/>Mixto<br />
+    <input type="radio"  name="Tanda" value="Nocturno"/>Nocturno<br />
+    <label>@ViewBag.Result</label><br />
+    <button class="btn btn-success">Confirmar</button>
+</form>
+

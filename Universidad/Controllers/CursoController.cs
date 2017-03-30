@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Universidad.DAL;
 using Universidad.Models;
@@ -114,6 +110,15 @@ namespace Universidad.Controllers
             db.Curso.Remove(curso);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult VerCurso()
+        {
+            ServiceReference1.WebService1SoapClient consumo = new ServiceReference1.WebService1SoapClient();
+            var hola = consumo.MostrarCurso();
+            ViewBag.Nombres = hola; 
+            return View();
         }
 
         protected override void Dispose(bool disposing)

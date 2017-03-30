@@ -10,7 +10,7 @@ namespace Universidad.DAL
 {
     public class UniversityContext : DbContext
     {
-        public UniversityContext() : base("base=CS")
+        public UniversityContext() : base("CS")
         {
 
         }

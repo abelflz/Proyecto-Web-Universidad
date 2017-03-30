@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "VerCurso";
+}
+<table class="table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.Label("Nombre Materia")
+        </th>
+    </tr>
+    @foreach(var i in ViewBag.Nombres)
+    {
+        <tr>
+            <td>
+                @i
+            </td>
+        </tr>
+    }
+</table>
+

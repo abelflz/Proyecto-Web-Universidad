@@ -18,7 +18,7 @@ namespace Universidad.Controllers
         // GET: Inscripcion
         public ActionResult Index()
         {
-            var inscripcion = db.Inscripcion.Include(i => i.Curso).Include(i => i.Estudiante);
+            var inscripcion = db.Inscripcion.Include(i => i.Curso).Include(i => i.Estudiante).Include(i => i.Profesor);
             return View(inscripcion.ToList());
         }
 
@@ -42,6 +42,7 @@ namespace Universidad.Controllers
         {
             ViewBag.CodigoCurso = new SelectList(db.Curso, "Codigo", "Nombre");
             ViewBag.Matricula = new SelectList(db.Estudiante, "Matricula", "Nombre");
+            ViewBag.CedulaProfesor = new SelectList(db.Profesor, "cedula", "Nombre");
             return View();
         }
 
@@ -50,7 +51,7 @@ namespace Universidad.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CodigoCurso,Matricula,Nota")] Inscripcion inscripcion)
+        public ActionResult Create([Bind(Include = "ID,CedulaProfesor,CodigoCurso,Matricula,Nota")] Inscripcion inscripcion)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +62,7 @@ namespace Universidad.Controllers
 
             ViewBag.CodigoCurso = new SelectList(db.Curso, "Codigo", "Nombre", inscripcion.CodigoCurso);
             ViewBag.Matricula = new SelectList(db.Estudiante, "Matricula", "Nombre", inscripcion.Matricula);
+            ViewBag.CedulaProfesor = new SelectList(db.Profesor, "cedula", "Nombre", inscripcion.CedulaProfesor);
             return View(inscripcion);
         }
 
@@ -78,6 +80,7 @@ namespace Universidad.Controllers
             }
             ViewBag.CodigoCurso = new SelectList(db.Curso, "Codigo", "Nombre", inscripcion.CodigoCurso);
             ViewBag.Matricula = new SelectList(db.Estudiante, "Matricula", "Nombre", inscripcion.Matricula);
+            ViewBag.CedulaProfesor = new SelectList(db.Profesor, "cedula", "Nombre", inscripcion.CedulaProfesor);
             return View(inscripcion);
         }
 
@@ -86,7 +89,7 @@ namespace Universidad.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CodigoCurso,Matricula,Nota")] Inscripcion inscripcion)
+        public ActionResult Edit([Bind(Include = "ID,CedulaProfesor,CodigoCurso,Matricula,Nota")] Inscripcion inscripcion)
         {
             if (ModelState.IsValid)
             {
@@ -96,6 +99,7 @@ namespace Universidad.Controllers
             }
             ViewBag.CodigoCurso = new SelectList(db.Curso, "Codigo", "Nombre", inscripcion.CodigoCurso);
             ViewBag.Matricula = new SelectList(db.Estudiante, "Matricula", "Nombre", inscripcion.Matricula);
+            ViewBag.CedulaProfesor = new SelectList(db.Profesor, "cedula", "Nombre", inscripcion.CedulaProfesor);
             return View(inscripcion);
         }
 

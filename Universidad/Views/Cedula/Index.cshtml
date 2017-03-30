@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Validación Cédula";
+}
+
+<form method="post" action="@Url.Action("Index", "Cedula", null)" class="login-form">
+    <label>C&eacute;dula</label>
+    <input type="text" class="form-control" name="cedulaPersona"/><br />
+    <button class="btn btn-success">Verificar</button>
+    @ViewBag.Result
+</form>
+

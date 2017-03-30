@@ -1,13 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="~/Content/Theme.css" type="text/css" />
     <meta name="viewport" content="width=device-width" />
     <title>Error</title>
 </head>
-<body>
+<body style="background-color: white;">
     <hgroup>
         <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
+        <h2>@ViewBag.Error</h2>
+        @Html.ActionLink("Volver Atrás", "Index", "Inicio")
     </hgroup>
 </body>
 </html>

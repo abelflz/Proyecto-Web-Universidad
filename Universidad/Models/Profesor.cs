@@ -15,7 +15,7 @@ namespace Universidad.Models
         [Required]
         public string cedula { get; set; }
 
-        [Display(Name = "Nombre Completo")]
+        [Display(Name = "Nombre")]
         [Required]
         public string Nombre { get; set; }
 

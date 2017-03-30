@@ -1,0 +1,26 @@
+﻿@{ 
+    Layout = null;
+}
+
+<head>
+    <title>Sistema Banking</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" type="text/css" />
+    <link rel="https://fonts.googleapis.com/css?family=Roboto:300" type="text/css" />
+    <link rel="stylesheet" href="~/Content/Theme.css" type="text/css" />
+    <script type="text/javascript">
+        $('.message a').click(function () {
+            $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+        });
+    </script>
+</head>
+<body>
+    <div class="login-page">
+        <div class="form">
+            <form method="post" action="@Url.Action("Index", "Inicio",  null)" class="login-form">
+                <input type="text" placeholder="Usuario" class="form-control" name="cuenta"/>
+                <input type="password" placeholder="Contraseña" class="form-control" name="clave"/>
+                <button class="btn">login</button>
+            </form>
+        </div>
+    </div>
+</body>
