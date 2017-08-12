@@ -34,7 +34,7 @@ namespace Universidad
                 if (vCalculo < 10)
                     vnTotal += vCalculo;
                 else
-                    vnTotal += Int32.Parse(vCalculo.ToString().Substring(0, 11)) + Int32.Parse(vCalculo.ToString().Substring(1, 1));
+                    vnTotal += Int32.Parse(vCalculo.ToString().Substring(0, 10)) + Int32.Parse(vCalculo.ToString().Substring(1, 1));
             }
 
             if (vnTotal % 10 == 0)

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Services;
 using System.Data.SqlClient;
 using System.Data;
+using System.Runtime.Serialization;
 
 namespace Universidad
 {
@@ -18,24 +19,41 @@ namespace Universidad
     // [System.Web.Script.Services.ScriptService]
     public class WebService1 : System.Web.Services.WebService
     {
-
-        [WebMethod]
-        public List<String> MostrarCurso()
+        [DataContract]
+        public class Curso
         {
-            List<String> Tabla = new List<String>();
+            [DataMember]
+            public string codigo { get; set; }
+
+            [DataMember]
+            public string nombre { get; set; }
+
+            [DataMember]
+            public int credito { get; set; }
+        }
+        [WebMethod]
+        public List<Curso> MostrarCurso()
+        {
+            List<Curso> curso = new List<Curso>();
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source=ABEL-PC;Initial Catalog=Uni2;Integrated Security=True";
 
             con.Open();
 
-            SqlCommand cmd = new SqlCommand("select Nombre from Cursoes", con);
-
+            SqlCommand cmd = new SqlCommand("select Codigo, Nombre, Creditos from Cursoes", con);
             SqlDataReader reader = cmd.ExecuteReader();
+
             while (reader.Read())
             {
-                Tabla.Add(reader["Nombre"].ToString());
+                var llenarCurso = new Curso
+                {
+                    nombre = reader["Nombre"].ToString(),
+                    codigo = reader["Codigo"].ToString(),
+                    credito = Convert.ToInt32(reader["Creditos"])
+                };
+                curso.Add(llenarCurso);
             }
-            return Tabla;     
+            return curso;
         }
     }
 }

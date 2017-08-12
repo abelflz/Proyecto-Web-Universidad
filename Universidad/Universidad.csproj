@@ -225,15 +225,17 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Service References\Tanda\Universidad.Tanda.SeleccionTandaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Properties\DataSources\System.Data.DataTable.datasource" />
     <Content Include="Service References\ServiceReference1\Universidad.ServiceReference1.ArrayOfString.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\ServiceReference1\Universidad.ServiceReference1.MostrarCursoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\Tanda\Universidad.Tanda.SeleccionTandaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Service References\Tanda\WebService3.disco" />
     <None Include="Service References\Tanda\configuration91.svcinfo" />
     <None Include="Service References\Tanda\configuration.svcinfo" />

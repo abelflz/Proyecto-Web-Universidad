@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Universidad.ServiceReference1.ArrayOfString>
+@{
     ViewBag.Title = "VerCurso";
 }
 <table class="table-bordered table-striped">
@@ -6,12 +7,18 @@
         <th>
             @Html.Label("Nombre Materia")
         </th>
+        <th>
+            @Html.Label("Créditos")
+        </th>
+        <th>
+            @Html.Label("Código")
+        </th>
     </tr>
-    @foreach(var i in ViewBag.Nombres)
+    @foreach(var i in Model)
     {
         <tr>
             <td>
-                @i
+                @i.
             </td>
         </tr>
     }

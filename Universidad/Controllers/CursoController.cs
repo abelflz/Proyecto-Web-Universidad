@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -116,9 +117,9 @@ namespace Universidad.Controllers
         public ActionResult VerCurso()
         {
             ServiceReference1.WebService1SoapClient consumo = new ServiceReference1.WebService1SoapClient();
-            var hola = consumo.MostrarCurso();
-            ViewBag.Nombres = hola; 
-            return View();
+            var tabla = consumo.MostrarCurso().ToList();
+
+            return View(tabla);
         }
 
         protected override void Dispose(bool disposing)
